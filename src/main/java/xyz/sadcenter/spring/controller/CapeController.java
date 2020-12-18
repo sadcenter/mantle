@@ -31,27 +31,21 @@ public final class CapeController {
     )
 
     @ResponseBody
-    public ResponseEntity<byte[]> getUserCape(@PathVariable String name) throws IOException {
-        Document cape = SpringWebApplication
+    public ResponseEntity<byte[]> getUserCape(@PathVariable String name) {
+        Document user = SpringWebApplication
                 .getMongoCollection()
                 .find(new Document("name", name))
                 .first();
 
-        InputStream in;
-        if (cape == null) {
-            in = getOptifineCape(name);
-        } else {
-            in = getCape(cape.getString("cape"));
-        }
+        try (InputStream in = user == null ? getOptifineCape(name) : getCape(user.getString("cape"))) {
+            final HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_PNG);
 
-        if (in == null) {
+            return new ResponseEntity<>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+        } catch (IOException ignored) {
             return null;
         }
 
-        final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_PNG);
-
-        return new ResponseEntity<>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
     }
 
     private InputStream getCape(String capeName) throws FileNotFoundException {
@@ -59,11 +53,7 @@ public final class CapeController {
     }
 
     private InputStream getOptifineCape(String capeName) throws IOException {
-        try {
-            return new URL("http://107.182.233.85/capes/" + capeName + ".png").openStream();
-        } catch (FileNotFoundException e) {
-            return null;
-        }
+        return new URL("http://107.182.233.85/capes/" + capeName + ".png").openStream();
     }
 
 }
