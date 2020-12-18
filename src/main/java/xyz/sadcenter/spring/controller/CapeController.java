@@ -41,9 +41,13 @@ public final class CapeController {
             final HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.IMAGE_PNG);
 
+            if(in == null) {
+                return ResponseEntity.notFound().build();
+            }
+
             return new ResponseEntity<>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
-        } catch (IOException ignored) {
-            return null;
+        } catch (IOException e) {
+            return ResponseEntity.notFound().build();
         }
 
     }
