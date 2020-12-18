@@ -15,7 +15,7 @@ Mantle cape system, but worse lmao
  If you want you can write your application that will be change host
 
 ## Database
- I use MongoDatabase for it, in "SpringWebApplication" you must provide host, port, login data etc
+ I use MongoDatabase for it, in "SpringWebApplication" class you must provide host, port, login data etc
  Document template:
  ```json
  {
