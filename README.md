@@ -1,5 +1,6 @@
 # mantle
 Mantle cape system, but worse lmao
+(YES, OPTIFINE WORKS TOO)
 
 ## Insert your cape!
  If you want to insert your cape you must put .png file in same directory of builded jar
@@ -11,6 +12,7 @@ Mantle cape system, but worse lmao
  ```text
  127.0.0.1 s.optifine.net
  ```
+ If you want you can write your application that will be change host
 
 ## Database
  I use MongoDatabase for it, in "SpringWebApplication" you must provide host, port, login data etc
@@ -23,5 +25,6 @@ Mantle cape system, but worse lmao
 ```
 
 
-## How it works?
+## How enable it?
  Just upload builded jar file to vps. etc run and you got your own mantle cape system
+
