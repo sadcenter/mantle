@@ -12,7 +12,7 @@ Mantle cape system, but worse lmao
  ```text
  127.0.0.1 s.optifine.net
  ```
- If you want you can write your application that will be change host
+ If you want you can write your application that will be change host [LOOK THIS](https://github.com/sadcenter/Capes)
 
 ## Database
  I use MongoDatabase for it, in "SpringWebApplication" class you must provide host, port, login data etc
