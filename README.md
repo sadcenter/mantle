@@ -1,6 +1,5 @@
 # mantle
-Mantle cape system, but worse lmao
-(YES, OPTIFINE WORKS TOO)
+Optifine's cape system, which replaces s.optifine.net, mainly this project is for people who want to see how this works!
 
 ## Insert your cape!
  If you want to insert your cape you have to put the .png file in the same directory of built jar
