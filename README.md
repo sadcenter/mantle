@@ -4,22 +4,24 @@ Optifine's cape system, which replaces s.optifine.net, mainly this project is fo
 ## Insert your cape!
  If you want to insert your cape you have to put the .png file in the same directory of built jar
 
-## Client
- Run notepad as an admin and open the "C:\Windows\System32\drivers\etc\hosts" file, then add line with text: 
- (vps ipv4) s.optifine net
+## What I have to do on the client-side?
+ Add a line to local system host's file: 
+ ```text 
+ (website server's ipv4) s.optifine net
+ ```
  for example:
  ```text
- 127.0.0.1 s.optifine.net
+ 1.2.3.4 s.optifine.net
  ```
- You can write your own application that will change the host's file
+ Feel free to write your own application which will change the host's file
 
 ## Database
- I've used Mongo Database for this project, in the "SpringWebApplication" class you have to provide host, port, login data etc.
- MongoDB document template:
+ I've used Mongo Database for this project, in the properties file (`application.properties`) you have to provide host, port, login data etc.
+
  ```json
  {
   "name": "nickname",
-  "cape": "cape"  
+  "cape": "cape.png"  
 }
 ```
 

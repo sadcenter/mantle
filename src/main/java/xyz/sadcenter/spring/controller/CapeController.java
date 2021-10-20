@@ -1,7 +1,7 @@
 package xyz.sadcenter.spring.controller;
 
 import org.apache.commons.io.IOUtils;
-import org.bson.Document;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
-import xyz.sadcenter.spring.SpringWebApplication;
+import xyz.sadcenter.spring.repository.UserRepository;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,38 +18,42 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-/**
- * @author sadcenter on 16.12.2020
- * @project mantle
- */
 @Controller
-public final class CapeController {
+public class CapeController {
 
-    @GetMapping(
-            value = "/capes/{name}.png",
-            produces = MediaType.IMAGE_JPEG_VALUE
-    )
+    private final UserRepository repository;
 
+    @Autowired
+    public CapeController(UserRepository repository) {
+        this.repository = repository;
+    }
+
+    @GetMapping(value = "/capes/{name}.png", produces = MediaType.IMAGE_JPEG_VALUE)
     @ResponseBody
-    public ResponseEntity<byte[]> getUserCape(@PathVariable String name) {
-        Document user = SpringWebApplication
-                .getMongoCollection()
-                .find(new Document("name", name))
-                .first();
+    public ResponseEntity<?> getUserCape(@PathVariable String name) {
+        return repository.findByName(name)
+                .thenApply(user -> {
+                    try (InputStream inputStream = user == null ? getOptifineCape(name) : getCape(user.getCape())) {
+                        if(inputStream == null) {
+                            return ResponseEntity.notFound().build();
+                        }
 
-        try (InputStream in = user == null ? getOptifineCape(name) : getCape(user.getString("cape"))) {
-            final HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.IMAGE_PNG);
+                        HttpHeaders headers = new HttpHeaders();
+                        headers.setContentType(MediaType.IMAGE_PNG);
 
-            if(in == null) {
-                return ResponseEntity.notFound().build();
-            }
+                        return new ResponseEntity<>(toByteArray(inputStream), headers, HttpStatus.CREATED);
 
-            return new ResponseEntity<>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
-        } catch (IOException e) {
-            return ResponseEntity.notFound().build();
-        }
+                    } catch (IOException exception) {
+                        exception.printStackTrace();
+                        return ResponseEntity.notFound().build();
+                    }
+                }).join();
+    }
 
+    private byte[] toByteArray(InputStream inputStream) throws IOException { //dont actually know is it necessary?
+        byte[] bytes = IOUtils.toByteArray(inputStream);
+        inputStream.close(); // it maybe causes a memory leak (not sure but it's better to have a few more code lines than a memory leak)
+        return bytes;
     }
 
     private InputStream getCape(String capeName) throws FileNotFoundException {
