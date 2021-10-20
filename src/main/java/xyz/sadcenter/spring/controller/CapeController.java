@@ -52,7 +52,7 @@ public class CapeController {
 
     private byte[] toByteArray(InputStream inputStream) throws IOException { //dont actually know is it necessary?
         byte[] bytes = IOUtils.toByteArray(inputStream);
-        inputStream.close(); // it maybe causes a memory leak (not sure but it's better to have a few more code lines than a memory leak)
+        inputStream.close(); // without this line it maybe causes a memory leak (not sure but it's better to have a few more code lines than a memory leak)
         return bytes;
     }
 
