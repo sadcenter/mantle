@@ -1,4 +1,4 @@
-package xyz.sadcenter.spring.controller;
+package xyz.sadcenter.mantle.controller;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
-import xyz.sadcenter.spring.repository.UserRepository;
+import xyz.sadcenter.mantle.repository.UserRepository;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

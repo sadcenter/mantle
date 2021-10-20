@@ -1,11 +1,11 @@
-package xyz.sadcenter.spring.repository;
+package xyz.sadcenter.mantle.repository;
 
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
-import xyz.sadcenter.spring.domain.User;
+import xyz.sadcenter.mantle.domain.User;
 
 import java.util.concurrent.CompletableFuture;
 

@@ -1,4 +1,4 @@
-package xyz.sadcenter.spring.domain;
+package xyz.sadcenter.mantle.domain;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 

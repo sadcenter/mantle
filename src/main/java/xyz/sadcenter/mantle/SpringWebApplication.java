@@ -1,4 +1,4 @@
-package xyz.sadcenter.spring;
+package xyz.sadcenter.mantle;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
