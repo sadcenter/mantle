@@ -11,11 +11,11 @@ Optifine's cape system, which replaces s.optifine.net, mainly this project is fo
  ```text
  127.0.0.1 s.optifine.net
  ```
- You can write your own application that will change the host's file [LOOK THIS](https://github.com/sadcenter/Capes)
+ You can write your own application that will change the host's file
 
 ## Database
  I've used Mongo Database for this project, in the "SpringWebApplication" class you have to provide host, port, login data etc.
- Mongo document template:
+ MongoDB document template:
  ```json
  {
   "name": "nickname",
