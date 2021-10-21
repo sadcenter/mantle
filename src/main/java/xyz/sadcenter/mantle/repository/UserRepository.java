@@ -9,10 +9,10 @@ import xyz.sadcenter.mantle.domain.User;
 
 import java.util.concurrent.CompletableFuture;
 
-@Repository @CacheConfig(cacheNames = {"users"})
+@Repository
 public interface UserRepository extends MongoRepository<User, String> {
 
-    @Async @Cacheable(key = "#name")
+    @Async @Cacheable(key = "#name", cacheNames = {"users"})
     CompletableFuture<User> findByName(String name);
 
 }
