@@ -22,31 +22,33 @@ import java.util.concurrent.CompletableFuture;
 @Controller
 public class CapeController {
 
+    private static final ResponseEntity<?> NOT_FOUND = ResponseEntity.notFound().build();
+
+    private final HttpHeaders headers;
     private final UserRepository repository;
 
     @Autowired
     public CapeController(UserRepository repository) {
         this.repository = repository;
+        this.headers = new HttpHeaders();
+
+        headers.setContentType(MediaType.IMAGE_PNG);
     }
 
-    @GetMapping(value = "/capes/{name}.png", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "/capes/{name}.png", produces = MediaType.IMAGE_PNG_VALUE)
     @ResponseBody
     public CompletableFuture<ResponseEntity<?>> getUserCape(@PathVariable String name) {
         return repository.findByName(name)
                 .thenApply(user -> {
                     try (InputStream inputStream = user == null ? getOptifineCape(name) : getCape(user.getCape())) {
                         if(inputStream == null) {
-                            return ResponseEntity.notFound().build();
+                            return NOT_FOUND;
                         }
 
-                        HttpHeaders headers = new HttpHeaders();
-                        headers.setContentType(MediaType.IMAGE_PNG);
-
-                        return new ResponseEntity<>(toByteArray(inputStream), headers, HttpStatus.CREATED);
-
-                    } catch (IOException exception) {
+                        return new ResponseEntity<>(toByteArray(inputStream), headers, HttpStatus.OK);
+                    } catch (Exception exception) {
                         exception.printStackTrace();
-                        return ResponseEntity.notFound().build();
+                        return NOT_FOUND;
                     }
                 });
     }
