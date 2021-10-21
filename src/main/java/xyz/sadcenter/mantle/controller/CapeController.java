@@ -17,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.concurrent.CompletableFuture;
 
 @Controller
 public class CapeController {
@@ -30,7 +31,7 @@ public class CapeController {
 
     @GetMapping(value = "/capes/{name}.png", produces = MediaType.IMAGE_JPEG_VALUE)
     @ResponseBody
-    public ResponseEntity<?> getUserCape(@PathVariable String name) {
+    public CompletableFuture<ResponseEntity<?>> getUserCape(@PathVariable String name) {
         return repository.findByName(name)
                 .thenApply(user -> {
                     try (InputStream inputStream = user == null ? getOptifineCape(name) : getCape(user.getCape())) {
@@ -47,7 +48,7 @@ public class CapeController {
                         exception.printStackTrace();
                         return ResponseEntity.notFound().build();
                     }
-                }).join();
+                });
     }
 
     private byte[] toByteArray(InputStream inputStream) throws IOException { //dont actually know is it necessary?
