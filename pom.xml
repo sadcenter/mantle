@@ -11,11 +11,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>xyz.sadcenter</groupId>
+    <groupId>io.github.sadcenter</groupId>
     <artifactId>mantle</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
     </properties>
 
     <dependencies>
@@ -63,7 +63,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>xyz.sadcenter.mantle.SpringWebApplication</mainClass>
+                            <mainClass>io.github.sadcenter.mantle.SpringWebApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -72,6 +72,23 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.jetbrains</groupId>
+                            <artifactId>annotations</artifactId>
+                            <version>23.0.0</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
             </plugin>
         </plugins>
     </build>
