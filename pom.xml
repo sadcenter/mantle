@@ -63,7 +63,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>io.github.sadcenter.mantle.SpringWebApplication</mainClass>
+                            <mainClass>io.sadcenter.mantle.SpringWebApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
